@@ -6,3 +6,12 @@ span {
   padding: .5rem;
   color: white;
 }
+
+.itemCount span {
+  color: black;
+  padding: 1rem;
+}
+
+.card {
+  margin: 0.5rem;
+}
