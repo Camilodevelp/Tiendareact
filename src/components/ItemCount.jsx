@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const stock = 4
 
-export const ItemCount = () => {
+export const ItemCount = (onAdd) => {
     const [count, setCount] = useState(1);
 
     const handleDecreaseCount = () => {
@@ -15,10 +15,6 @@ export const ItemCount = () => {
         if (stock > count) {
             setCount((prev) => prev + 1);
         }
-    };
-
-    const onAdd = () => {
-        alert(count)
     };
 
     return (

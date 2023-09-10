@@ -15,3 +15,7 @@ span {
 .card {
   margin: 0.5rem;
 }
+.detalle {
+  display: none;
+  background-color: black;
+}

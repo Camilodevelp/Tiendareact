@@ -24,7 +24,7 @@ export const ItemDetailContainer = (props) => {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <Container className="mt - 4">
+    <Container className="detalle">
       <h1>Detalle</h1>
       <ItemDetail product={product} />
     </Container>
