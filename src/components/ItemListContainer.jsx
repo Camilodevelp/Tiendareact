@@ -1,38 +1,47 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Container from 'react-bootstrap/Card';
+import Container from "react-bootstrap/Card";
+import { getFirestore, getDocs, collection } from "firebase/firestore";
 
-import data from "../data/productos.json";
+//import data from "../data/productos.json";
 import { ItemList } from "./ItemList";
+
 
 export const ItemListContainer = (props) => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const {id} = useParams();
+
+  const { id } = useParams();
 
   useEffect(() => {
-    const promise = new Promise ((resolve, reject) => {
-      setTimeout(() => resolve(data), 2000)
-    });
+    const db = getFirestore();
 
-    promise.then((data) => {
-      if(!id) {
-        setProducts(data)
-      } else {
-        const productsFiltered = data.filter(
-          (product) => product.category === id
-        );
-        setProducts(productsFiltered);
-      }
-    });
-  }, [])
+    const refCollection = collection(db, "Items");
+
+    getDocs(refCollection)
+      .then((snapshot) => {
+        if (snapshot.size === 0) console.log("no results");
+        else
+          setProducts(
+            snapshot.docs.map((doc) => {
+              return { id: doc.id, ...doc.data() };
+            })
+          );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Container className="mt - 4">
       <h1>{props.greeting}</h1>
-      <div style={{display: "flex", flexWrap: "wrap"}}>
-      <ItemList products = {products}/>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <ItemList products={products} />
       </div>
     </Container>
-    );
+  );
 };

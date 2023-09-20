@@ -1,12 +1,15 @@
 import { Container, Table } from "react-bootstrap";
 import { useContext } from "react";
+import { useState } from "react";
 import { CartContext } from "../contexts/CartContext";
-import Button from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 export const Cart = () => {
+  const  [formValues, setFormValues, toHaveFormValues]  = useState("");
   const { items, removeItem, clear } = useContext(CartContext);
+  console.log(items)
+
 
   const total = () =>
     items.reduce(
@@ -14,6 +17,7 @@ export const Cart = () => {
         acumulador + valorActual.quantity * valorActual.precio,
       0
     );
+
 
   const handleChange = (ev) => {
     setFormValues((prev) => ({
@@ -37,18 +41,16 @@ export const Cart = () => {
           name: "",
           phone: "",
           email: "",
-        })
-        clear()
-        alert("Su orden: "+ id + " ha sido completada")
+        });
+        clear();
+        alert("Su orden: " + id + " ha sido completada");
       }
     });
   };
-  
+
   return (
     <Container>
-      <h1>Cart</h1>{
-        items.length === 0 ? <div>No hay productos</div> :
-  }
+      <h1>Cart</h1>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
@@ -61,8 +63,8 @@ export const Cart = () => {
         <tbody>
           {items.map((item) => (
             <tr key={item.id}>
-              <td>{item.name} </td>
-              <td>{item.precio} </td>
+              <td>{item.title} </td>
+              <td>{item.Price} </td>
               <td>{item.quantity} </td>
               <td>
                 <button onClick={() => removeItem(item.id)}>Eliminar</button>
@@ -87,7 +89,7 @@ export const Cart = () => {
       </Table>
       <h2>Ingrese datos de usuario</h2>
       <Form>
-        <form.Group className="mb-3" contorlId="formBasicEmail">
+        <Form.Group className="mb-3" >
           <Form.Label>Nombre</Form.Label>
           <Form.Control
             onChange={handleChange}
@@ -95,9 +97,9 @@ export const Cart = () => {
             type="text"
             name="name"
             required
-            />
-        </form.Group>
-        <form.Group className="mb-3" contorlId="formBasicEmail">
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" >
           <Form.Label>Email</Form.Label>
           <Form.Control
             onChange={handleChange}
@@ -105,20 +107,20 @@ export const Cart = () => {
             type="email"
             name="email"
             required
-            />
-        </form.Group>
-        <form.Group className="mb-3">
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
           <Form.Label>Tel</Form.Label>
           <Form.Control
             onChange={handleChange}
-            value={toHaveFormValues.phone}
+            value={formValues.phone}
             type="text"
             name="phone"
             required
-            />
-        </form.Group>
+          />
+        </Form.Group>
       </Form>
-      <button onclick={sendOrder}>Comprar</button>
+      <button onClick={sendOrder}>Comprar</button>
     </Container>
   );
 };

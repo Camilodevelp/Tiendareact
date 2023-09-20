@@ -8,12 +8,13 @@ export const ItemDetail = ({ product }) => {
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
-      <h1>{product.name}</h1>
-      <img src={product.img} alt={product.name} style={{ height: "180px" }} />
-      <div>Stock: {product.stock} </div>
-      <div>Precio: {product.precio} </div>
-      <div>{product.category}</div>
-      <ItemCount stock={product.stock} onAdd={onAdd} />
+      <h1>{product.title}</h1>
+      <img src={product.imageID} alt={product.title} style={{ height: "180px" }} />
+      <div>Detalle: {product.Description} </div>
+      <div>Stock: {product.Stock} </div>
+      <div>Precio: {product.Price} </div>
+      <div>{product.categoryID}</div>
+      <ItemCount stock={product.Stock} onAdd={onAdd} />
     </div>
   );
 };
