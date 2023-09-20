@@ -43,10 +43,12 @@ export const Cart = () => {
       }
     });
   };
-
+  
   return (
     <Container>
-      <h1>Cart</h1>
+      <h1>Cart</h1>{
+        items.length === 0 ? <div>No hay productos</div> :
+  }
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
@@ -93,7 +95,7 @@ export const Cart = () => {
             type="text"
             name="name"
             required
-          />
+            />
         </form.Group>
         <form.Group className="mb-3" contorlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
@@ -103,7 +105,7 @@ export const Cart = () => {
             type="email"
             name="email"
             required
-          />
+            />
         </form.Group>
         <form.Group className="mb-3">
           <Form.Label>Tel</Form.Label>
@@ -113,12 +115,9 @@ export const Cart = () => {
             type="text"
             name="phone"
             required
-          />
+            />
         </form.Group>
       </Form>
-      <Button variant="primary" type="button" onClick={sendOrder}>
-        Archivar
-      </Button>
       <button onclick={sendOrder}>Comprar</button>
     </Container>
   );
