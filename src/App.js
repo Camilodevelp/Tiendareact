@@ -20,7 +20,7 @@ function App() {
           />
           <Route
             path="/Item/:id"
-            element={<ItemDetailContainer greeting="Hiyaa!!" />}
+            element={<ItemDetailContainer  />}
           />
         </Routes>
       </BrowserRouter>

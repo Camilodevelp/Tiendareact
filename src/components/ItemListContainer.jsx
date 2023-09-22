@@ -1,38 +1,46 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Card";
-import { getFirestore, getDocs, collection } from "firebase/firestore";
+import {
+  getFirestore,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 
 //import data from "../data/productos.json";
 import { ItemList } from "./ItemList";
-
 
 export const ItemListContainer = (props) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   const { id } = useParams();
 
   useEffect(() => {
     const db = getFirestore();
-
-    const refCollection = collection(db, "Items");
+    const refCollection = id
+      ? query(collection(db, "Items"), where("categoryID", "==", id))
+      : collection(db, "Items");
 
     getDocs(refCollection)
       .then((snapshot) => {
-        if (snapshot.size === 0) console.log("no results");
-        else
-          setProducts(
-            snapshot.docs.map((doc) => {
-              return { id: doc.id, ...doc.data() };
-            })
-          );
+        if (snapshot.size === 0) StyleSheetList([]);
+        else {
+          if (id) {
+            setProducts(
+              snapshot.docs.map((doc) => {
+                return { id: doc.id, ...doc.data() };
+              })
+            );
+          }
+        }
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   if (loading) return <div>Loading...</div>;
 

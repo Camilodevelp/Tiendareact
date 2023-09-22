@@ -8,7 +8,6 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 export const Cart = () => {
   const  [formValues, setFormValues, toHaveFormValues]  = useState("");
   const { items, removeItem, clear } = useContext(CartContext);
-  console.log(items)
 
 
   const total = () =>
