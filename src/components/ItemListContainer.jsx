@@ -28,7 +28,6 @@ export const ItemListContainer = (props) => {
       .then((snapshot) => {
         if (snapshot.size === 0) StyleSheetList([]);
         else {
-          if (id) {
             setProducts(
               snapshot.docs.map((doc) => {
                 return { id: doc.id, ...doc.data() };
@@ -36,7 +35,7 @@ export const ItemListContainer = (props) => {
             );
           }
         }
-      })
+      )
       .finally(() => {
         setLoading(false);
       });

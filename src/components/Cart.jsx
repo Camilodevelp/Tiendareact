@@ -6,9 +6,12 @@ import Form from "react-bootstrap/Form";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 export const Cart = () => {
-  const  [formValues, setFormValues, toHaveFormValues]  = useState("");
+  const [formValues, setFormValues] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
   const { items, removeItem, clear } = useContext(CartContext);
-
 
   const total = () =>
     items.reduce(
@@ -16,7 +19,6 @@ export const Cart = () => {
         acumulador + valorActual.quantity * valorActual.precio,
       0
     );
-
 
   const handleChange = (ev) => {
     setFormValues((prev) => ({
@@ -87,8 +89,8 @@ export const Cart = () => {
         </tfoot>
       </Table>
       <h2>Ingrese datos de usuario</h2>
-      <Form>
-        <Form.Group className="mb-3" >
+      <Form onSubmit={sendOrder}>
+        <Form.Group className="mb-3">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
             onChange={handleChange}
@@ -98,7 +100,7 @@ export const Cart = () => {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3" >
+        <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
             onChange={handleChange}
@@ -118,8 +120,8 @@ export const Cart = () => {
             required
           />
         </Form.Group>
+      <button type="submite">Comprar</button>
       </Form>
-      <button onClick={sendOrder}>Comprar</button>
     </Container>
   );
 };
